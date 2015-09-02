@@ -21,16 +21,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .requiresChannel().anyRequest().requiresSecure()
-                .and()
+                // for having https mandatory
+                //                .requiresChannel().anyRequest().requiresSecure()
+                //                .and()
                 .authorizeRequests()
-//                .antMatchers("/admin/").access("hasRole('ADMIN')")
-//                .antMatchers("/admin/**").denyAll()
-                .anyRequest().authenticated()
+                .antMatchers("/").permitAll()
+                .antMatchers("/admin/**")
+                .authenticated()
                 .and()
                 .formLogin()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+        ;
     }
 
     @Autowired
