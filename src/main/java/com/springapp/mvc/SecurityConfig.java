@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -21,10 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().
-//                antMatchers("/**").access("hasRole('ADMIN')").
-//                and().formLogin();
-        http.authorizeRequests()
+        http
+                .requiresChannel().anyRequest().requiresSecure()
+                .and()
+                .authorizeRequests()
+//                .antMatchers("/admin/").access("hasRole('ADMIN')")
+//                .antMatchers("/admin/**").denyAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -34,15 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("root").password("eurovision").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("root").password("").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("agent").password("").roles("AGENT");
     }
-
-//    @Configuration
-//    protected static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-//        @Override
-//        public void init(AuthenticationManagerBuilder auth) throws Exception {
-//            auth.inMemoryAuthentication().withUser("ravan").password("ravan123").roles("USER");
-//            auth.inMemoryAuthentication().withUser("ram").password("ram123").roles("ADMIN");
-//        }
-//    }
 }
