@@ -2,10 +2,7 @@ package com.springapp.mvc;
 
 /**
  * Created by metairie on 02-Sep-15.
- *
- * // TODO apply role to Controller directly
- * //  is it possible .antMatchers("/admin/**").access("hasRole('ADMIN')")
- * 
+ * <p/>
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +13,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //@Autowired
-    //private UserDetailsService neosUserDetailsService;
+//      DOES NOT WORK
+//      @Autowired
+//      public UserDetailsService neosUserDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // for having https mandatory
-                //                .requiresChannel().anyRequest().requiresSecure()
-                //                .and()
+                // .requiresChannel().anyRequest().requiresSecure()
+                // .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/admin/**")
@@ -36,9 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .and()
                 .httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+
+        //.and()
+        //.authorizeRequests()
+        //.antMatchers("/admin/**").access("hasRole('ADMIN')")
         ;
     }
 
@@ -49,10 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // to be fully complete
         // implement class Account (real world)
         // this class could retrieve JDBC data
+//        auth.userDetailsService(new NeosUserDetailsService());
 
-        auth.userDetailsService(new NeosUserDetailsService());
 //      OK works
-//        auth.inMemoryAuthentication().withUser("root").password("").roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("agent").password("").roles("AGENT");
+        auth.inMemoryAuthentication().withUser("root").password("").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("agent").password("").roles("AGENT");
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,8 +13,20 @@ import java.util.Set;
 /**
  * Created by metairie on 01-Sep-15.
  */
-@Component
+@Service("userDetailsService")
 public class NeosUserDetailsService implements UserDetailsService {
+
+//    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
+//
+//        UserDetails userDetails = new AccountUserDetails(user, true, true, true, true, getAuthorities(user.getRole()));
+//        return userDetails;
+//    }
+
+
+    public NeosUserDetailsService() {
+        System.out.println(" NeosUserDetailsService constructor ");
+        System.out.println(" hashcode " + NeosUserDetailsService.this.hashCode());
+    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -29,6 +41,7 @@ public class NeosUserDetailsService implements UserDetailsService {
         Account account;
 
         public UserDetailsAdapter(Account account) {
+            System.out.println("  UserDetailsAdapter constructor with account " + account.username);
             this.account = account;
         }
 
@@ -80,6 +93,7 @@ public class NeosUserDetailsService implements UserDetailsService {
         @Override
         public String getAuthority() {
             if (account.username.equalsIgnoreCase("root")) {
+                System.out.println(" ROLE ADMIN");
                 return "ROLE_ADMIN";
             } else {
                 return "ROLE_PUBLIC";
@@ -95,4 +109,5 @@ public class NeosUserDetailsService implements UserDetailsService {
             username = s;
         }
     }
+
 }
