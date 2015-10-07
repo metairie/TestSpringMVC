@@ -14,9 +14,9 @@
 
     <!--<security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled"/>-->
 
-    <!--<security:authentication-manager alias="authenticationManager">-->
-        <!--<security:authentication-provider user-service-ref="neosUserDetailsService"/>-->
-    <!--</security:authentication-manager>-->
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="neosUserDetailsService"/>
+    </security:authentication-manager>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>

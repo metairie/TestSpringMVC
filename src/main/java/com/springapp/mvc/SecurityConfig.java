@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin/**")
+                .antMatchers("/TestSpringMVC/admin/**")
                 .authenticated()
                 .and()
                 .formLogin()

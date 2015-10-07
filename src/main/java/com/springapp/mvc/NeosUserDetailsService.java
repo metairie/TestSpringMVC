@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by metairie on 01-Sep-15.
  */
-@Service("userDetailsService")
+@Service("neosUserDetailsService")
 public class NeosUserDetailsService implements UserDetailsService {
 
 //    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException, DataAccessException {
